@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from .models import Todo
 from .forms import TodoForm
 
-@login_required
+@staff_member_required(login_url='admin:login')
 def todo_list(request):
     todos = Todo.objects.filter(user=request.user)
     form = TodoForm()
